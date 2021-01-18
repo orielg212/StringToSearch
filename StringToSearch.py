@@ -34,10 +34,11 @@ def TestingFilesForInterestingContent(pathInPathToShearch):
     interestingFiles = [] # Empty list 
     for x in dirlist: # Browsing on all files in list
         if not(os.path.isdir(pathInPathToShearch+'\\'+x)):  # Its file ?
-            f = open(pathInPathToShearch+'\\'+x, 'r') # read
+            f = open(pathInPathToShearch+'\\'+x, 'rb') # read
             content = f.read()
             for y in interestingContent: # check file content against keys
-                if y in content:
+                if y.encode() in content.lower():
+                    
                     #print (shareDir+"\\"+x)
                     interestingFiles.append(pathInPathToShearch+"\\"+x) # write to list
                     
@@ -49,7 +50,7 @@ def TestingFilesForInterestingName(pathInPathToShearch):
     interestingFiles = [] # Empty list 
     for x in dirlist: # Browsing on all files in list
         for y in interestingContent: # check file content against keys
-            if y in x:
+            if y in x.lower():
                 #print (shareDir+"\\"+x)
                 interestingFiles.append(pathInPathToShearch+"\\"+x) # write to list
                     
@@ -59,6 +60,8 @@ def TestingFilesForInterestingName(pathInPathToShearch):
 interestingContent = []
 f = open("ToSearch.txt", "r")
 for x in f:
+    #print(x.replace("\n","").replace("\r",""))
+    x = x.replace("\n","").replace("\r","")
     interestingContent.append(x)
 f.close()
 
